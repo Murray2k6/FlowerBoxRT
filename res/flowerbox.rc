@@ -1,0 +1,105 @@
+#include <windows.h>
+#include <commctrl.h>
+#include "../src/resource.h"
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+IDI_APP ICON "flowerbox.ico"
+1 RT_MANIFEST "app.manifest"
+// NVIDIA DLSS runtime, unpacked at run time (see src/dlss.cpp).
+IDR_DLSS_RUNTIME RCDATA "../third_party/dlss/lib/nvngx_dlss.dll"
+
+STRINGTABLE
+BEGIN
+    IDS_DESCRIPTION "3D FlowerBox RT"
+    IDS_SHAPE_CUBE "Cube"
+    IDS_SHAPE_TETRAHEDRON "Tetrahedron"
+    IDS_SHAPE_PYRAMIDS "Pyramids"
+    IDS_SHAPE_CYLINDER "Cylinder"
+    IDS_SHAPE_SPRING "Spring"
+END
+
+IDD_CONFIG DIALOGEX 0, 0, 340, 275
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "3D FlowerBox RT Setup"
+FONT 9, "Segoe UI", 400, 0, 0x1
+BEGIN
+    GROUPBOX        "Coloring", -1, 7, 7, 80, 101
+    AUTORADIOBUTTON "&Checkerboard", IDC_CHECKER, 13, 19, 70, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "&Per Side", IDC_PERSIDE, 13, 31, 70, 10
+    AUTORADIOBUTTON "&One Color", IDC_ONECOLOR, 13, 43, 70, 10
+    AUTOCHECKBOX    "S&mooth", IDC_SMOOTH, 13, 62, 70, 10, WS_GROUP | WS_TABSTOP
+    AUTOCHECKBOX    "S&lanted", IDC_SLANTED, 13, 74, 70, 10, WS_TABSTOP
+    AUTOCHECKBOX    "C&ycle", IDC_CYCLE, 13, 86, 70, 10, WS_TABSTOP
+
+    AUTOCHECKBOX    "&Spin", IDC_SPIN, 95, 10, 70, 10, WS_TABSTOP
+    AUTOCHECKBOX    "&Bloom", IDC_BLOOM, 95, 22, 70, 10, WS_TABSTOP
+    AUTOCHECKBOX    "&Two-sided", IDC_TWOSIDED, 95, 34, 70, 10, WS_TABSTOP
+
+    GROUPBOX        "S&hape", -1, 92, 62, 78, 46
+    COMBOBOX        IDC_SHAPE, 98, 78, 66, 80, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    GROUPBOX        "Comple&xity", -1, 7, 113, 163, 44
+    LTEXT           "Min", -1, 13, 124, 40, 8
+    RTEXT           "Max", -1, 124, 124, 40, 8
+    CONTROL         "", IDC_COMPLEXITY, TRACKBAR_CLASS, TBS_AUTOTICKS | WS_TABSTOP, 10, 135, 157, 16
+
+    GROUPBOX        "Si&ze", -1, 7, 161, 163, 44
+    LTEXT           "Smaller", -1, 13, 172, 40, 8
+    RTEXT           "Larger", -1, 124, 172, 40, 8
+    CONTROL         "", IDC_IMAGESIZE, TRACKBAR_CLASS, TBS_AUTOTICKS | WS_TABSTOP, 10, 183, 157, 16
+
+    GROUPBOX        "Spee&d", -1, 7, 209, 163, 44
+    LTEXT           "Slower", -1, 13, 220, 40, 8
+    CTEXT           "100%", IDC_SPEED_LABEL, 60, 220, 50, 8
+    RTEXT           "Faster", -1, 124, 220, 40, 8
+    CONTROL         "", IDC_SPEED, TRACKBAR_CLASS, TBS_AUTOTICKS | WS_TABSTOP, 10, 231, 157, 16
+
+    GROUPBOX        "Ray tracing", -1, 178, 7, 155, 162
+    AUTOCHECKBOX    "Use &ray tracing", IDC_RT_ENABLE, 184, 19, 143, 10, WS_TABSTOP
+    LTEXT           "", IDC_RT_STATUS, 184, 31, 143, 18
+    AUTOCHECKBOX    "Sh&adows", IDC_RT_SHADOWS, 184, 52, 143, 10, WS_TABSTOP
+    AUTOCHECKBOX    "Ambient occl&usion", IDC_RT_AO, 184, 64, 143, 10, WS_TABSTOP
+    LTEXT           "", IDC_RT_SAMPLES_LABEL, 184, 80, 143, 8
+    CONTROL         "", IDC_RT_SAMPLES, TRACKBAR_CLASS, TBS_AUTOTICKS | WS_TABSTOP, 181, 90, 149, 16
+    LTEXT           "", IDC_RT_BOUNCES_LABEL, 184, 109, 143, 8
+    CONTROL         "", IDC_RT_BOUNCES, TRACKBAR_CLASS, TBS_AUTOTICKS | WS_TABSTOP, 181, 119, 149, 16
+    LTEXT           "", IDC_RT_REFLECT_LABEL, 184, 138, 143, 8
+    CONTROL         "", IDC_RT_REFLECT, TRACKBAR_CLASS, TBS_AUTOTICKS | WS_TABSTOP, 181, 148, 149, 16
+
+    GROUPBOX        "Display", -1, 178, 174, 155, 79
+    LTEXT           "Anti-al&iasing:", -1, 184, 189, 62, 8
+    COMBOBOX        IDC_MSAA, 250, 187, 77, 80, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Frame rate:", -1, 184, 207, 62, 8
+    COMBOBOX        IDC_FPS, 250, 205, 77, 80, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    AUTOCHECKBOX    "Sho&w floor", IDC_FLOOR, 184, 222, 143, 10, WS_TABSTOP
+    LTEXT           "", IDC_DLSS_STATUS, 184, 235, 143, 16
+
+    PUSHBUTTON      "D&efaults", IDC_DEFAULTS, 7, 256, 50, 14
+    DEFPUSHBUTTON   "OK", IDOK, 229, 256, 50, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 283, 256, 50, 14
+END
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION 1, 0, 0, 0
+PRODUCTVERSION 1, 0, 0, 0
+FILEOS VOS_NT_WINDOWS32
+FILETYPE VFT_APP
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "FileDescription", "3D FlowerBox RT Screen Saver"
+            VALUE "FileVersion", "1.0.0.0"
+            VALUE "InternalName", "FlowerBoxRT"
+            VALUE "OriginalFilename", "3D FlowerBox RT.scr"
+            VALUE "ProductName", "3D FlowerBox RT"
+            VALUE "ProductVersion", "1.0.0.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 1200
+    END
+END

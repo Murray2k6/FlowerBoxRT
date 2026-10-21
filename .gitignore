@@ -1,0 +1,6 @@
+# Build output
+/build/
+/out/
+
+# NVIDIA DLSS SDK files: downloaded by fetch_dlss.ps1, not redistributable as source
+/third_party/dlss/
